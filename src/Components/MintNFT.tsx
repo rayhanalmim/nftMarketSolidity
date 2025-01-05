@@ -3,7 +3,11 @@ import { ethers } from "ethers";
 import { useWallet } from "@/Hook/useWallet";
 import { useContract } from "@/Hook/useContract";
 
-const MintNFT = () => {
+interface MintNFTProps {
+    setMint: (value: boolean) => void;
+}
+
+const MintNFT = ({ setMint }: MintNFTProps) => {
     const { connectWallet } = useWallet();
     const [tokenURI, setTokenURI] = useState("");
     const [price, setPrice] = useState("");
@@ -30,6 +34,7 @@ const MintNFT = () => {
                 value: listingFee,
             });
             await tx.wait();
+            setMint(true);
             console.log("NFT Minted Successfully!");
         } catch (error) {
             console.error("Minting failed:", error);

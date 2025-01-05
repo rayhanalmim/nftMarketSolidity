@@ -7,6 +7,7 @@ import { useState } from "react";
 export default function Home() {
   const { connectWallet } = useWallet();
   const [walletAddress, setWalletAddress] = useState("");
+  const [mint, setMint] = useState(false);
 
   const handleConnect = async () => {
     const result = await connectWallet();
@@ -23,13 +24,13 @@ export default function Home() {
         {
           walletAddress && (
             <div>
-              <MintNFT />
+              <MintNFT setMint={setMint}/>
             </div>
           )
         }
         {
           walletAddress && <div>
-            <TotalListedNFTs />
+            <TotalListedNFTs mint={mint}/>
           </div>
         }
       </header>

@@ -4,7 +4,12 @@ import { useWallet } from "@/Hook/useWallet";
 import { useContract } from "@/Hook/useContract";
 import Image from "next/image";
 
-const TotalListedNFTs = () => {
+interface TotalListedNFTsProps {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    mint: any; // Replace 'any' with the appropriate type if known
+}
+
+const TotalListedNFTs = ({ mint }: TotalListedNFTsProps) => {
     const { connectWallet } = useWallet();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [listedNFTs, setListedNFTs] = useState<any[]>([]);
@@ -56,7 +61,6 @@ const TotalListedNFTs = () => {
                     nfts.map(async (nft: string[]) => {
                         // Fetch image URL from the tokenURI
                         const image = await fetchImageFromMetadata(nft[4]); // The 4th item in the NFT object is the tokenURI
-                        console.log("ffff",image)
                         return { ...nft, image }; // Add the image URL to each NFT
                     })
                 );
@@ -72,7 +76,7 @@ const TotalListedNFTs = () => {
         if (!walletConnected) {
             fetchListedNFTs();
         }
-    }, [connectWallet, walletConnected]);
+    }, [connectWallet, walletConnected, mint]);
 
     return (
         <div>
@@ -84,11 +88,12 @@ const TotalListedNFTs = () => {
                     {listedNFTs.length === 0 ? (
                         <p>No NFTs are currently listed for sale.</p>
                     ) : (
-                        <div>
+                        <div className="grid grid-cols-4 gap-2">
                             {listedNFTs.map((nft, index) => (
-                                <div key={index} style={{ marginBottom: "20px", border: "1px solid #ccc", padding: "10px" }}>
+                                <div key={index}>
+                                <div  style={{ marginBottom: "20px", border: "1px solid #ccc", padding: "10px" }}>
                                     {/* Display NFT Image */}
-                                    <div>
+                                    
                                         <Image
                                             src={nft?.image || "https://via.placeholder.com/100"} // If no image is found, fallback to a placeholder
                                             alt={`NFT ${nft.tokenId}`}
@@ -96,11 +101,12 @@ const TotalListedNFTs = () => {
                                             width={200}
                                             style={{ objectFit: "cover" }}
                                         />
-                                    </div>
+                                   
 
                                     <p><strong>Token ID:</strong> {nft[0]}</p>
                                     <p><strong>Price:</strong> {ethers.formatEther(nft[1])} AVAX</p>
                                     <p><strong>Creator:</strong> {nft[2]}</p>
+                                </div>
                                 </div>
                             ))}
                         </div>
