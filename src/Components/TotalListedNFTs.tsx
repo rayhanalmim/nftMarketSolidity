@@ -11,10 +11,15 @@ const TotalListedNFTs = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [walletConnected, setWalletConnected] = useState<boolean>(false); // New state for wallet connection status
 
+    console.log("listedNFTs:", listedNFTs);
+
     // Function to fetch metadata and image from tokenURI
     const fetchImageFromMetadata = async (tokenURI: string) => {
         try {
-            const response = await fetch(tokenURI);
+            // Remove any surrounding quotes from the tokenURI
+            const cleanTokenURI = tokenURI.replace(/^"(.*)"$/, '$1');
+            
+            const response = await fetch(cleanTokenURI);
             const metadata = await response.json();
             return metadata.image; // Return the image URL from metadata
         } catch (error) {
@@ -22,6 +27,7 @@ const TotalListedNFTs = () => {
             return ""; // Return empty if error occurs
         }
     };
+    
 
     useEffect(() => {
         const fetchListedNFTs = async () => {
@@ -42,12 +48,15 @@ const TotalListedNFTs = () => {
 
                 // Call the `getListedNFTs` function from the smart contract
                 const nfts = await contract.getListedNFTs();
+
+                console.log(nfts)
                 
                 // Fetch image URLs for each NFT
                 const nftsWithImages = await Promise.all(
                     nfts.map(async (nft: string[]) => {
                         // Fetch image URL from the tokenURI
                         const image = await fetchImageFromMetadata(nft[4]); // The 4th item in the NFT object is the tokenURI
+                        console.log("ffff",image)
                         return { ...nft, image }; // Add the image URL to each NFT
                     })
                 );
@@ -81,7 +90,7 @@ const TotalListedNFTs = () => {
                                     {/* Display NFT Image */}
                                     <div>
                                         <Image
-                                            src={nft.image || "https://via.placeholder.com/100"} // If no image is found, fallback to a placeholder
+                                            src={nft?.image || "https://via.placeholder.com/100"} // If no image is found, fallback to a placeholder
                                             alt={`NFT ${nft.tokenId}`}
                                             height={200}
                                             width={200}
