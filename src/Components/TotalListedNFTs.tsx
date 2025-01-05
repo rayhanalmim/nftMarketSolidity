@@ -73,14 +73,14 @@ const TotalListedNFTs = ({ mint }: TotalListedNFTsProps) => {
             }
         };
 
-        if (!walletConnected) {
             fetchListedNFTs();
-        }
-    }, [connectWallet, walletConnected, mint]);
+       
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ walletConnected, mint]);
 
     return (
-        <div>
-            <h2>Listed NFTs</h2>
+        <div className="mt-10">
+            <h2 className="text-center font-semibold text-2xl">Listed NFTs</h2>
             {loading ? (
                 <p>Loading...</p>
             ) : (
@@ -88,7 +88,7 @@ const TotalListedNFTs = ({ mint }: TotalListedNFTsProps) => {
                     {listedNFTs.length === 0 ? (
                         <p>No NFTs are currently listed for sale.</p>
                     ) : (
-                        <div className="grid grid-cols-4 gap-2">
+                        <div className="grid grid-cols-4 gap-2 mx-8 mt-7">
                             {listedNFTs.map((nft, index) => (
                                 <div key={index}>
                                 <div  style={{ marginBottom: "20px", border: "1px solid #ccc", padding: "10px" }}>
