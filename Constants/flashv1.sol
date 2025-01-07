@@ -64,14 +64,6 @@ contract FlashUSDT is ERC20 {
         return super.transfer(recipient, amount);
     }
 
-    /**
-     * @notice Transfers fUSDT from one account to another, but prevents transfer if expired.
-     * @dev Ensures tokens are not transferable after 90 days.
-     * @param sender Address of the sender.
-     * @param recipient Address of the recipient.
-     * @param amount Amount of fUSDT to transfer.
-     * @return Whether the transfer was successful.
-     */
     function transferFrom(
         address sender,
         address recipient,
