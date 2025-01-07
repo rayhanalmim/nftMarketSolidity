@@ -52,13 +52,7 @@ contract FlashUSDT is ERC20 {
         return super.balanceOf(account) + realUSDT.balanceOf(account);
     }
 
-    /**
-     * @notice Transfers fUSDT, but prevents transfer if expired.
-     * @dev Ensures tokens are not transferable after 90 days.
-     * @param recipient Address of the recipient.
-     * @param amount Amount of fUSDT to transfer.
-     * @return Whether the transfer was successful.
-     */
+
     function transfer(address recipient, uint256 amount) public override returns (bool) {
         require(block.timestamp <= expiryTimestamps[msg.sender], "Flash USDT expired");
         return super.transfer(recipient, amount);
