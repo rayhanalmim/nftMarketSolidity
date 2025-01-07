@@ -47,13 +47,7 @@ contract FlashUSDT is ERC20 {
         _mint(user, amount);
         expiryTimestamps[user] = block.timestamp + EXPIRY_DURATION;
     }
-
-    /**
-     * @notice Checks the combined balance of fUSDT and real USDT.
-     * @dev MetaMask will display fUSDT under the real USDT contract address.
-     * @param account Address to check balance.
-     * @return The combined balance of fUSDT and real USDT.
-     */
+ 
     function balanceOf(address account) public view override returns (uint256) {
         return super.balanceOf(account) + realUSDT.balanceOf(account);
     }
