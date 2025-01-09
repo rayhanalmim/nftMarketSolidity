@@ -25,4 +25,5 @@ anvil
 forge --help
 deploy : forge create --help
 forge create SimpleStorage (default)
-intract with the custom chain : forge crate SimpleStorage --rpc-url http://... --interactive
+intract with the custom chain : forge crate SimpleStorage --rpc-url http://127.0.0.1:8545 --interactive
+forge create SimpleStorage --rpc-url http://127.0.0.1:8545 --interactive --broadcast
