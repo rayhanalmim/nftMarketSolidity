@@ -34,3 +34,9 @@ onchain deployment script : forge script script/DeploySimpleStorage.s.sol --rpc-
 
 hax to dec : cast --to-base 0x714c2 dec
 case --help
+
+encript .env file : cast wallet import defaultkey --interactive || file : cast wallet list
+deploy using encripted file : forge script script/DeploySimpleStorage.s.sol --rpc-url $RPC_URL --account defaultkey
+ --sender 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266 --broadcast -vvvv
+
+ 
